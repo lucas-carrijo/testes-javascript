@@ -4,7 +4,10 @@ let currentResult = defaultResult;
 let logEntries = [];
 //parseInt convert a text into a integer number
 //addEventListener is a js function that has two parameters, an event and a function
-
+//typeof -> return the type of data
+/*a propriedade defer faz com que um scriot do html seja baixado mais cedo, porém não executa os scripts imediatamente após o termino do download
+os scripts só são executados após o termino do download e após a análise do html*/
+/*em cenários onde os scripts não interagem com a página web podemos usar o async no html, o async baixa o script o mais cedo possível e já o executa*/
 function getUserNumberInput() {
     return parseInt(userInput.value);
 }
