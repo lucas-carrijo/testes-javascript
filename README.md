@@ -32,3 +32,12 @@ startGameBtn.addEventListener('click', start);
 podemos usar a função anomino como paramentro ex:
 se colocarmos o parenteses logo depois da chave a função é executada imediatamente
 */ 
+
+/*
+examplo de função anonima e arrow function
+const add = function(a, b){
+    return a + b
+}
+
+const add = (a, b) => a + b;
+*/

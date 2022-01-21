@@ -12,7 +12,7 @@ let gameIsRunning = false;
 
 //o prompt gera uma string e por isso a const selection pode acessar métodos como o toUpperCase
 //nos bastidores o javascript transforma 
-const getPlayerChoice = function () {
+const getPlayerChoice = () => {
   const selection = prompt(`${ROCK}, ${PAPER} or ${SCISSORS}?`, '').toUpperCase();
   if (
     selection !== ROCK &&
@@ -20,12 +20,12 @@ const getPlayerChoice = function () {
     selection !== SCISSORS
   ) {
     alert(`Invalid choice! We chose ${DEFAULT_USER_CHOICE} for you!`);
-    return DEFAULT_USER_CHOICE;
+    return;
   }
   return selection;
 };
 
-const getComputerChoice = function () {
+const getComputerChoice = () => {
   const randomValue = Math.random();
   if (randomValue < 0.34) {
     return ROCK;
@@ -34,30 +34,51 @@ const getComputerChoice = function () {
   } else {
     return SCISSORS;
   }
-
 }
 
-const getWinner = function (cChoice, pChoice) {
-  if (cChoice === pChoice) {
-    return RESULT_DRAW;
-  } else if (
-    cChoice === ROCK && pChoice === PAPER ||
-    cChoice === PAPER && pChoice === SCISSORS ||
-    cChoice === SCISSORS && pChoice === ROCK
-  ) {
-    return RESULT_PLAYER_WINS;
-  } else {
-    return RESULT_COMPUTER_WINS;
-  }
-}
+const getWinner = (cChoice, pChoice = DEFAULT_USER_CHOICE) =>
+  cChoice === pChoice
+    ? RESULT_DRAW
+    : (cChoice === ROCK && pChoice === PAPER) ||
+      (cChoice === PAPER && pChoice === SCISSORS) ||
+      (cChoice === SCISSORS && pChoice === ROCK)
+    ? RESULT_PLAYER_WINS
+    : RESULT_COMPUTER_WINS;
 
-startGameBtn.addEventListener('click', function () {
+  // if (cChoice === pChoice) {
+  //   return RESULT_DRAW;
+  // } else if (
+  //   (cChoice === ROCK && pChoice === PAPER) ||
+  //   (cChoice === PAPER && pChoice === SCISSORS) ||
+  //   (cChoice === SCISSORS && pChoice === ROCK)
+  // ) {
+  //   return RESULT_PLAYER_WINS;
+  // } else {
+  //   return RESULT_COMPUTER_WINS;
+  // }
+
+startGameBtn.addEventListener('click', () => {
   if (gameIsRunning) {
     return;
   }
   gameIsRunning = true;
   console.log('Game is starting...');
-  const playerSelection = getPlayerChoice();
-  const playerSelection = getComputerChoice();
-  console.log(playerSelection);
+  const playerChoice = getPlayerChoice();
+  const computerChoice = getComputerChoice();
+  let winner;
+  if (playerChoice) {
+    winner = getWinner(computerChoice, playerChoice);
+  } else {
+    winner = getWinner(computerChoice);
+  }
+  let message = `You picked ${playerChoice}, computer picked ${computerChoice} therefore you `;
+  if (winner === RESULT_DRAW) {
+    message =  message + 'had a draw';
+  } else if (winner === RESULT_PLAYER_WINS) {
+    message = message + 'won'
+  } else{
+    message = message + 'lost'
+  }
+  console.log(message);
+  gameIsRunning = false; 
 });
